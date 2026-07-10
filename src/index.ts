@@ -7,6 +7,10 @@ export {
   assertFeatureDoesNotExist,
   ValidationError,
   FEATURES_DIR,
+  FEATURES_FOLDER,
+  DEFAULT_SRC_DIR,
+  normalizeSrcDir,
+  toDisplayPath,
 } from "./utils/validate.js";
 export type { ResolveFeaturesRootResult } from "./utils/validate.js";
 export type {

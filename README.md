@@ -1,32 +1,44 @@
-# @opedro-monteiro/create-feature
+# create-react-feature
 
 CLI to scaffold **Feature-Driven Architecture** modules for React / Next.js projects.
 
 ```bash
-npx @opedro-monteiro/create-feature auth
+npx create-react-feature auth
 # or
-bunx @opedro-monteiro/create-feature auth
+bunx create-react-feature auth
+# or
+pnpm dlx create-react-feature auth
 ```
 
 After a global install, you can also run:
 
 ```bash
-npm i -g @opedro-monteiro/create-feature
-create-feature auth
+npm i -g create-react-feature
+create-react-feature auth
 ```
 
 ## Requirements
 
 - Node.js 18+
 
-If `src/features` does not exist, the CLI creates it automatically.
+The CLI asks where your `src` directory is (default: `./src`).  
+Useful in monorepos, for example:
+
+```text
+web/
+├── apps/
+│   └── src/          ← point here: apps/src
+└── api/
+```
+
+If `<src>/features` does not exist, it is created automatically.
 
 ## What it generates
 
 Every feature always includes:
 
 ```text
-src/features/<feature>/
+<src>/features/<feature>/
 ├── components/
 ├── hooks/
 ├── services/
@@ -65,10 +77,11 @@ npm run dev -- auth
 ## Programmatic API
 
 ```ts
-import { generateFeature } from "@opedro-monteiro/create-feature";
+import { generateFeature } from "create-react-feature";
 
 await generateFeature({
   name: "auth",
+  srcDir: "apps/web/src", // default: "./src"
   folders: {
     schemas: true,
     storage: false,

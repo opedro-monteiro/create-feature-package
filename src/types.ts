@@ -17,6 +17,12 @@ export type OptionalFile =
 
 export interface FeatureOptions {
   name: string;
+  /**
+   * Path to the project's `src` directory (relative to cwd or absolute).
+   * Defaults to `./src`.
+   * Example: `apps/web/src` in a monorepo.
+   */
+  srcDir: string;
   folders: {
     schemas: boolean;
     storage: boolean;

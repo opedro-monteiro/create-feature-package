@@ -5,31 +5,39 @@ import { ensureTrackedDir, writeTextFile } from "../utils/fs.js";
 import { toFeatureNames } from "../utils/naming.js";
 import {
   assertFeatureDoesNotExist,
+  DEFAULT_SRC_DIR,
   resolveFeaturesRoot,
+  toDisplayPath,
 } from "../utils/validate.js";
 
 export interface GenerateFeatureResult {
   featurePath: string;
+  featurePathRelative: string;
   names: FeatureNames;
   created: GeneratedPath[];
   featuresRootCreated: boolean;
+  featuresRootRelative: string;
+  srcDir: string;
 }
 
 /**
- * Scaffolds a feature module under `src/features/<name>`.
- * Creates `src/features` automatically when it does not exist.
+ * Scaffolds a feature module under `<srcDir>/features/<name>`.
+ * Creates `features` (and `src` when needed) automatically when missing.
  */
 export async function generateFeature(
   options: FeatureOptions,
   cwd: string = process.cwd(),
 ): Promise<GenerateFeatureResult> {
   const names = toFeatureNames(options.name);
-  const { featuresRoot, created: featuresRootCreated } =
-    await resolveFeaturesRoot(cwd);
+  const srcDir = options.srcDir?.trim() || DEFAULT_SRC_DIR;
+  const { featuresRoot, featuresRootRelative, created: featuresRootCreated } =
+    await resolveFeaturesRoot(srcDir, cwd);
   const featurePath = await assertFeatureDoesNotExist(
     featuresRoot,
     names.kebab,
+    cwd,
   );
+  const featurePathRelative = toDisplayPath(cwd, featurePath);
 
   const created: GeneratedPath[] = [];
 
@@ -43,7 +51,7 @@ export async function generateFeature(
       await write();
     }
     created.push({
-      relative: path.join("src", "features", names.kebab, relative),
+      relative: toDisplayPath(cwd, absolute),
       absolute,
       kind,
     });
@@ -240,5 +248,13 @@ export async function generateFeature(
     );
   }
 
-  return { featurePath, names, created, featuresRootCreated };
+  return {
+    featurePath,
+    featurePathRelative,
+    names,
+    created,
+    featuresRootCreated,
+    featuresRootRelative,
+    srcDir,
+  };
 }

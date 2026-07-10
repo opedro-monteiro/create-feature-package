@@ -10,12 +10,12 @@ async function main(): Promise<void> {
   const featureArg = args[0];
 
   console.log();
-  p.intro(pc.bgCyan(pc.black(" create-feature ")));
+  p.intro(pc.bgCyan(pc.black(" create-react-feature ")));
 
   p.note(
     [
-      "Scaffolds a Feature-Driven Architecture module under src/features/",
-      "Compatible with React and Next.js projects",
+      "Scaffolds a Feature-Driven Architecture module under <src>/features/",
+      "Compatible with React and Next.js projects (including monorepos)",
     ].join("\n"),
     "Feature CLI",
   );
@@ -31,7 +31,9 @@ async function main(): Promise<void> {
     spinner.stop(`Feature "${result.names.kebab}" created`);
 
     if (result.featuresRootCreated) {
-      p.log.info(`Created missing ${pc.cyan("src/features")} directory`);
+      p.log.info(
+        `Created missing ${pc.cyan(result.featuresRootRelative)} directory`,
+      );
     }
 
     const folders = result.created
@@ -44,7 +46,7 @@ async function main(): Promise<void> {
     p.note([...folders, ...files].join("\n") || "Nothing created", "Generated");
 
     p.outro(
-      `${pc.green("Done!")} Feature ready at ${pc.cyan(`src/features/${result.names.kebab}`)}`,
+      `${pc.green("Done!")} Feature ready at ${pc.cyan(result.featurePathRelative)}`,
     );
   } catch (error) {
     if (error instanceof ValidationError) {

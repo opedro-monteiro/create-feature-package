@@ -1,6 +1,7 @@
 import * as p from "@clack/prompts";
 import type { FeatureOptions } from "../types.js";
 import { isValidFeatureName, toKebabCase } from "../utils/naming.js";
+import { DEFAULT_SRC_DIR, normalizeSrcDir } from "../utils/validate.js";
 
 function handleCancel(value: unknown): asserts value is string | boolean | string[] {
   if (p.isCancel(value)) {
@@ -10,7 +11,7 @@ function handleCancel(value: unknown): asserts value is string | boolean | strin
 }
 
 /**
- * Collects feature name + optional folders/files via interactive prompts.
+ * Collects feature name, src path, and optional folders/files via interactive prompts.
  */
 export async function promptFeatureOptions(
   initialName?: string,
@@ -39,6 +40,20 @@ export async function promptFeatureOptions(
   }
 
   p.log.info(`Feature slug: ${toKebabCase(name)}`);
+
+  const srcDirAnswer = await p.text({
+    message: "Where is your src directory?",
+    placeholder: "apps/web/src",
+    initialValue: DEFAULT_SRC_DIR,
+    validate(value) {
+      const trimmed = value?.trim() ?? "";
+      if (!trimmed) return "src directory path is required.";
+    },
+  });
+  handleCancel(srcDirAnswer);
+  const srcDir = normalizeSrcDir(String(srcDirAnswer));
+
+  p.log.info(`Features will be created under: ${srcDir}/features`);
 
   const foldersAnswer = await p.multiselect({
     message: "Which optional folders should be included?",
@@ -104,6 +119,7 @@ export async function promptFeatureOptions(
 
   return {
     name,
+    srcDir,
     folders: {
       schemas: selectedFolders.has("schemas"),
       storage: selectedFolders.has("storage"),
