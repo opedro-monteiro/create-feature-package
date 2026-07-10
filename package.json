@@ -1,0 +1,59 @@
+{
+  "name": "create-feature",
+  "version": "1.0.0",
+  "description": "CLI to scaffold Feature-Driven Architecture modules for React/Next.js projects",
+  "keywords": [
+    "feature",
+    "cli",
+    "scaffold",
+    "feature-driven",
+    "react",
+    "nextjs",
+    "typescript",
+    "architecture"
+  ],
+  "homepage": "https://github.com/opedro-monteiro/create-feature-package",
+  "bugs": {
+    "url": "https://github.com/opedro-monteiro/create-feature-package/issues"
+  },
+  "author": "Pedro Oliveira <pedro.oliveira@monteirodev.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opedro-monteiro/create-feature-package.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "create-feature": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^1.7.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.21.0",
+    "typescript": "^7.0.2"
+  }
+}
