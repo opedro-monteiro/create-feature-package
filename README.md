@@ -8,6 +8,13 @@ npx @opedro-monteiro/create-feature auth
 bunx @opedro-monteiro/create-feature auth
 ```
 
+After a global install, you can also run:
+
+```bash
+npm i -g @opedro-monteiro/create-feature
+create-feature auth
+```
+
 ## Requirements
 
 - Node.js 18+
@@ -16,7 +23,7 @@ If `src/features` does not exist, the CLI creates it automatically.
 
 ## What it generates
 
-By default, every feature includes:
+Every feature always includes:
 
 ```text
 src/features/<feature>/
@@ -24,22 +31,28 @@ src/features/<feature>/
 ├── hooks/
 ├── services/
 ├── utils/
-├── types/
-├── index.ts          # optional (prompt)
-└── <feature>.tsx     # optional (prompt)
+│   └── <feature>.utils.ts
+└── types/
+    └── <feature>.types.ts
 ```
 
-Interactive prompts let you add:
+Interactive prompts also let you add optional folders and starter files:
 
 | Option | Creates |
 | --- | --- |
-| schemas (Zod) | `schemas/` + optional schema file |
-| storage | `storage/` |
-| api | `api/` |
-| constants | `constants/` |
-| store (Zustand) | `store/` + optional store file |
-| actions | `actions/` |
-| tests | `__tests__/` |
+| schemas (Zod) | `schemas/` (+ schema file if selected) |
+| storage | `storage/` + storage helper |
+| api | `api/` + API helper |
+| constants | `constants/` + constants file |
+| store (Zustand) | `store/` (+ store file if selected) |
+| actions | `actions/` + server action |
+| tests | `__tests__/` (+ test file if main component is selected) |
+| Main component | `<feature>.tsx` |
+| index.ts barrel | `index.ts` with public exports |
+| Service file | `services/<feature>.service.ts` |
+| Custom hook | `hooks/use-<feature>.ts` |
+| Zod schema | `schemas/<feature>.schema.ts` |
+| Zustand store | `store/<feature>.store.ts` |
 
 ## Local development
 
@@ -74,13 +87,6 @@ await generateFeature({
     store: true,
   },
 });
-```
-
-## Publish
-
-```bash
-npm login
-npm publish
 ```
 
 ## Project structure
