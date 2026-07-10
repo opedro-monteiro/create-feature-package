@@ -1,5 +1,5 @@
 {
-  "name": "create-feature",
+  "name": "@opedro-monteiro/create-feature",
   "version": "1.0.0",
   "description": "CLI to scaffold Feature-Driven Architecture modules for React/Next.js projects",
   "keywords": [
@@ -28,13 +28,16 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "create-feature": "./dist/cli.js"
+    "create-feature": "dist/cli.js"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",

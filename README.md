@@ -1,11 +1,11 @@
-# create-feature
+# @opedro-monteiro/create-feature
 
 CLI to scaffold **Feature-Driven Architecture** modules for React / Next.js projects.
 
 ```bash
-npx create-feature auth
+npx @opedro-monteiro/create-feature auth
 # or
-bunx create-feature auth
+bunx @opedro-monteiro/create-feature auth
 ```
 
 ## Requirements
@@ -52,7 +52,7 @@ npm run dev -- auth
 ## Programmatic API
 
 ```ts
-import { generateFeature } from "create-feature";
+import { generateFeature } from "@opedro-monteiro/create-feature";
 
 await generateFeature({
   name: "auth",
@@ -74,6 +74,13 @@ await generateFeature({
     store: true,
   },
 });
+```
+
+## Publish
+
+```bash
+npm login
+npm publish
 ```
 
 ## Project structure
